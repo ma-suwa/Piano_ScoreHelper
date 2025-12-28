@@ -12,8 +12,8 @@ const Piano = () => {
     
     // 音楽設定
     const [musicConfig, setMusicConfig] = useState({
-        clef: 'bass', // 'treble' | 'bass'
-        keySignature: 'C', // KEY_SIGNATURESのキー
+        clef: 'treble', // 'treble' | 'bass'
+        keySignature: 'D', // KEY_SIGNATURESのキー
     });
     
     // 利用可能な調性のリスト
@@ -294,6 +294,22 @@ const Piano = () => {
                                 <img 
                                     src="/flat.svg" 
                                     alt="flat"
+                                    style={{
+                                        position: 'absolute',
+                                        left: 'calc(50% - 25px)', // note.svgの左側に配置
+                                        top: `${notePosition}%`,
+                                        transform: 'translateY(-50%)',
+                                        width: 'auto',
+                                        height: '9.45%', // piano-scoreの高さに対する相対サイズ
+                                        zIndex: 16
+                                    }}
+                                />
+                            )}
+                            {/* ナチュラル記号を表示 */}
+                            {accidental.showNatural && (
+                                <img 
+                                    src="/natural.svg" 
+                                    alt="natural"
                                     style={{
                                         position: 'absolute',
                                         left: 'calc(50% - 25px)', // note.svgの左側に配置
