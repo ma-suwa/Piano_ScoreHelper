@@ -3,12 +3,8 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
     background-color: #000000;
-    touch-action: none;
-    overflow: hidden;
 }
 
 #controls {
@@ -117,6 +113,14 @@ body {
         0 0.75em 0 rgb(133, 133, 133);
 }
 
+/* 選択された白鍵のスタイル（薄いオレンジ） */
+.white.selected {
+    background: linear-gradient(#ffcc80, #ffe0b2);
+    transform: translateY(2%) scaleY(1.02); /* 押された状態と同じ沈み込みを維持する場合 */
+    box-shadow: inset 0 -0.2em 0.02em rgba(255, 255, 255, 0.2),
+        0 0.75em 0 rgb(133, 133, 133);
+}
+
 .black {
     transition: all 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
     background-color: #000000;
@@ -174,4 +178,22 @@ body {
 .black.active::after {
     box-shadow: none;
     background: linear-gradient(#000000, #000000);
+}
+
+/* 選択された黒鍵のスタイル（アクセントとして濃いオレンジ） */
+.black.selected {
+    background-color: #d35400;
+}
+
+.key-label {
+    position: absolute;
+    bottom: 2%; /* 鍵盤の手前側（下の方）に表示 */
+    left: 50%;
+    transform: translateX(-50%); /* 左右中央揃え */
+    color: #c7c7c7; /* 黒すぎず馴染む色 */
+    font-size: 12px;
+    font-weight: bold;
+    pointer-events: none; /* 文字をクリックしても鍵盤が反応するようにする */
+    user-select: none;
+    z-index: 5;
 }

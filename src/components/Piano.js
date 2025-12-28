@@ -52,7 +52,7 @@ const Piano = () => {
     const startScroll = (direction) => {
         if (scrollIntervalRef.current) return;
         const scrollSpeed = 10;
-        const scrollAmount = direction === 'left' ? scrollSpeed : -scrollSpeed;
+        const scrollAmount = direction === 'left' ? -scrollSpeed : scrollSpeed;
 
         const scrollStep = () => {
             if (containerRef.current) {
@@ -90,7 +90,42 @@ const Piano = () => {
     };
 
     return (
-        <>
+        <>  
+            {pressedKey && (
+                <div style={{
+                    position: 'relative',
+                    top: '20px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: '24px',
+                    fontFamily: 'sans-serif',
+                    zIndex: 20
+                }}>
+                    {pressedKey} を押しました
+                </div>
+            )}
+
+            <div id="piano-score" style={{
+                position: 'relative',
+                width: '100%',
+                height: '300px',
+                textAlign: 'center',
+                fontSize: '18px',
+                fontFamily: 'sans-serif',
+                zIndex: 10
+            }}>
+                {/* 15個の要素を生成して敷き詰める */}
+                {[...Array(15)].map((_, index) => (
+                    <div key={index} style={{
+                        height: '6.6666666667%', // 100% / 15
+                        background: 'linear-gradient(to bottom,#000000 0%,#000000 48%,#999 48%,#999 52%,#000000 52%,#000000 100%)',
+                        width: '100%'
+                    }}></div>
+                ))}
+            </div>
+
             <div id="controls">
                 <button
                     id="scroll-left"
@@ -119,20 +154,8 @@ const Piano = () => {
                 </button>
             </div>
 
-            {pressedKey && (
-                <div style={{
-                    position: 'absolute',
-                    top: '20px',
-                    left: '0px',
-                    textAlign: 'left',
-                    color: 'white',
-                    fontSize: '24px',
-                    fontFamily: 'sans-serif',
-                    zIndex: 20
-                }}>
-                    {pressedKey} を押しました
-                </div>
-            )}
+
+
 
             <div id="piano-container" ref={containerRef}>
                 {keys.map((keyData, index) => {
@@ -141,8 +164,13 @@ const Piano = () => {
                     let className = `key ${noteName}`;
                     let style = {};
 
+                    const isSelected = pressedKey === noteName;
+
+                    // ★追加: Cの白鍵のときだけラベル用のテキストを用意する
+                    const label = (note === 'C' && !isBlack) ? noteName : null;
+
                     if (isBlack) {
-                        // Calculate black key classes
+                        // ...（中略: 黒鍵の処理はそのまま）
                         let flatNoteChar = '';
                         if (note.startsWith('C')) flatNoteChar = 'D';
                         else if (note.startsWith('D')) flatNoteChar = 'E';
@@ -154,7 +182,6 @@ const Piano = () => {
                         const flatNoteNameUnicode = `${flatNoteChar}♭${octave}`;
                         className += ` ${flatNoteName} ${flatNoteNameUnicode} black`;
 
-                        // Calculate position
                         const blackKeyWidth = WHITE_KEY_WIDTH * 0.6;
                         const leftPosition = (whiteKeyIndex * TOTAL_KEY_SPACE) - (blackKeyWidth / 2);
 
@@ -175,6 +202,8 @@ const Piano = () => {
                             className={className}
                             style={style}
                             onPress={() => handleKeyPress(noteName)}
+                            isSelected={isSelected}
+                            label={label} /* ★追加: ラベルを渡す */
                         />
                     );
                 })}
