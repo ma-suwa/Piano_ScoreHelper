@@ -1,0 +1,177 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000000;
+    touch-action: none;
+    overflow: hidden;
+}
+
+#controls {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.scroll-btn {
+    background: #333;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.scroll-btn:active {
+    background: #666;
+    transform: scale(0.95);
+}
+
+.label {
+    color: #888;
+    font-family: sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#piano-container {
+    position: relative;
+    height: 260px;
+    padding-top: 60px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    display: flex;
+    background: linear-gradient(#000000, #666666);
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    touch-action: none;
+}
+
+.key {
+    position: relative;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: inherit;
+    font-size: 100%;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+    touch-action: none;
+}
+
+.white {
+    border-top: 4px ridge #881810;
+    transition: all 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: linear-gradient(#aaaab2, #ededed);
+    box-shadow: inset 0 1em rgba(0, 0, 0, 0.2),
+        inset 0 0 0.1em rgba(0, 0, 0, 0.6),
+        inset 0 -0.2em 0.02em rgba(255, 255, 255, 0.9),
+        0 1.5em 0 rgba(225, 225, 225, 0.7);
+    height: 100%;
+    width: 40px;
+    margin: 0 1px;
+    z-index: 1;
+    border-radius: 0 0 0.2em 0.2em;
+}
+
+.white:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 98%;
+    height: 30%;
+    transform: translateY(-100%);
+    background: linear-gradient(#ffffff00, #ffffff30);
+    pointer-events: none;
+}
+
+.white:active,
+.white.active {
+    transform: translateY(2%) scaleY(1.02);
+    transform-origin: top;
+    background: linear-gradient(#848484, #b1b1b1);
+    box-shadow: inset 0 -0.2em 0.02em rgba(255, 255, 255, 0.2),
+        0 0.75em 0 rgb(133, 133, 133);
+}
+
+.black {
+    transition: all 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background-color: #000000;
+    height: 60%;
+    box-shadow: inset 0 5em 0.1em rgb(0, 0, 0);
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    border: solid 0.1em rgba(0, 0, 0, 0.8);
+    border-radius: 0 0 0.3em 0.3em;
+}
+
+.black::before {
+    content: "";
+    position: absolute;
+    border-top-right-radius: 1em;
+    bottom: 11%;
+    left: 5%;
+    width: 90%;
+    height: 50%;
+    border-radius: 0.3em;
+    box-shadow: 0em 0.2em 0.1em rgba(255, 255, 255, 0.5),
+        0 0.2em 0.5em rgba(255, 255, 255, 0.25),
+        0em -3em 0.2em 0.1em rgba(0, 0, 0, 1);
+    background: linear-gradient(#414141, #000000);
+    pointer-events: none;
+}
+
+.black::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 10%;
+    border-radius: 0.3em;
+    box-shadow: inset 0.002em 0.1em 0.05em rgb(255, 255, 255, 0.25);
+    background: linear-gradient(#414141, #000000);
+    pointer-events: none;
+}
+
+.black:active,
+.black.active {
+    height: 61%;
+    background-color: #0b0b0b;
+}
+
+.black:active::before,
+.black.active::before {
+    box-shadow: none;
+    background: linear-gradient(#000000, #000000);
+}
+
+.black:active::after,
+.black.active::after {
+    box-shadow: none;
+    background: linear-gradient(#000000, #000000);
+}
